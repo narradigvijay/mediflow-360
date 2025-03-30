@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -14,6 +14,8 @@ import {
   ChevronDown,
   Menu,
   X,
+  Phone,
+  MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useToast } from "@/hooks/use-toast";
 
 const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed: (val: boolean) => void }) => {
   const { user } = useAuth();
@@ -61,6 +64,12 @@ const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed
         link: "/my-patients",
         roles: ["doctor"],
       });
+      items.push({
+        name: "Emergency Access",
+        icon: <AlertTriangle size={20} />,
+        link: "/emergency-access",
+        roles: ["doctor"],
+      });
     }
 
     if (user?.role === "hospital") {
@@ -69,6 +78,21 @@ const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed
         icon: <AlertTriangle size={20} />,
         link: "/emergency-access",
         roles: ["hospital"],
+      });
+      items.push({
+        name: "Hospital Locator",
+        icon: <MapPin size={20} />,
+        link: "/hospital-locator",
+        roles: ["hospital"],
+      });
+    }
+
+    if (user?.role === "patient") {
+      items.push({
+        name: "Emergency Contacts",
+        icon: <Phone size={20} />,
+        link: "/emergency-contacts",
+        roles: ["patient"],
       });
     }
 
@@ -94,10 +118,10 @@ const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed
   const navItems = getNavItems();
 
   return (
-    <div
+    <aside
       className={`${
         collapsed && !isMobile ? "w-20" : "w-64"
-      } bg-sidebar fixed h-full transition-all duration-300 z-10`}
+      } bg-sidebar h-full transition-all duration-300 flex flex-col fixed`}
     >
       {isMobile && (
         <button
@@ -149,6 +173,7 @@ const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed
             <button
               onClick={() => setCollapsed(!collapsed)}
               className="p-2 rounded-full hover:bg-sidebar-accent"
+              aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
               <ChevronDown
                 size={18}
@@ -161,7 +186,7 @@ const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed
         </div>
       </div>
 
-      <nav className="mt-8">
+      <nav className="mt-8 flex-1 overflow-y-auto">
         <ul className="space-y-2 px-3">
           {navItems.map((item) => (
             <li key={item.name}>
@@ -184,7 +209,15 @@ const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed
           ))}
         </ul>
       </nav>
-    </div>
+
+      <div className="p-4 border-t border-sidebar-border mt-auto">
+        {(!collapsed || isMobile) && (
+          <div className="text-xs text-sidebar-foreground/70">
+            MediFlow 360 v1.1.0
+          </div>
+        )}
+      </div>
+    </aside>
   );
 };
 
@@ -193,85 +226,140 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(isMobile);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  // Update sidebar collapsed state when screen size changes
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarCollapsed(true);
+    }
+  }, [isMobile]);
+
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try {
+      await logout();
+      navigate("/login");
+      toast({
+        title: "Logged out successfully",
+        description: "You have been logged out of your account",
+      });
+    } catch (error) {
+      toast({
+        title: "Error logging out",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="h-16 fixed top-0 left-0 right-0 bg-white border-b border-border shadow-sm z-10 flex items-center justify-between px-4">
-        <div className="flex items-center">
-          {isMobile && (
-            <button
-              onClick={() => setSidebarCollapsed(false)}
-              className="p-2 mr-2 rounded-full hover:bg-gray-100"
-            >
-              <Menu size={20} />
-            </button>
-          )}
-          <div className={`${!isMobile && "ml-16"} ${sidebarCollapsed && !isMobile ? "ml-20" : "ml-64"} transition-all duration-300`}>
-            <h1 className="text-xl font-bold text-medical-800">MediFlow 360</h1>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-4">
-          <Button variant="outline" size="icon" className="rounded-full">
-            <Bell size={20} />
-          </Button>
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                <Avatar>
-                  <AvatarImage src={user?.profilePicture} alt={user?.name} />
-                  <AvatarFallback className="bg-medical-200 text-medical-700">
-                    {user?.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end">
-              <DropdownMenuLabel>
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium">{user?.name}</p>
-                  <p className="text-xs text-muted-foreground">{user?.email}</p>
-                  <span className="inline-flex items-center rounded-full bg-medical-100 px-2 py-1 text-xs font-medium text-medical-800 mt-1">
-                    {user?.role.charAt(0).toUpperCase() + user?.role.slice(1)}
-                  </span>
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer"
-                onClick={() => navigate("/settings")}
-              >
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer text-red-500 focus:text-red-500"
-                onClick={handleLogout}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-background flex overflow-hidden">
+      {/* Mobile sidebar backdrop */}
+      {!sidebarCollapsed && isMobile && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-20" 
+          onClick={() => setSidebarCollapsed(true)}
+          aria-hidden="true"
+        />
+      )}
+      
+      {/* Sidebar */}
       <div className={`
-        ${sidebarCollapsed && !isMobile ? "ml-20" : "ml-0 md:ml-64"}
-        pt-16 min-h-screen transition-all duration-300
+        ${sidebarCollapsed && isMobile ? "hidden" : "block"}
+        z-30
       `}>
         <Sidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
-        <div className="p-6">
+      </div>
+      
+      {/* Main content */}
+      <div className={`flex-1 flex flex-col ${
+        sidebarCollapsed && !isMobile ? "ml-20" : "ml-0 md:ml-64"
+      } transition-all duration-300`}>
+        {/* Header */}
+        <header className="h-16 bg-white border-b border-border shadow-sm flex items-center justify-between px-4 sticky top-0 z-10">
+          <div className="flex items-center">
+            {isMobile && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => setSidebarCollapsed(false)}
+                className="mr-2"
+                aria-label="Open sidebar"
+              >
+                <Menu size={20} />
+              </Button>
+            )}
+            <h1 className="text-xl font-bold text-medical-800 hidden sm:block">
+              {user?.role === "patient" 
+                ? "Patient Dashboard" 
+                : user?.role === "doctor"
+                ? "Doctor Dashboard"
+                : "Hospital Dashboard"}
+            </h1>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <Button variant="outline" size="icon" className="rounded-full relative">
+              <Bell size={20} />
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                3
+              </span>
+            </Button>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                  <Avatar>
+                    <AvatarImage src={user?.profilePicture} alt={user?.name} />
+                    <AvatarFallback className="bg-medical-200 text-medical-700">
+                      {user?.name
+                        ? user.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                        : "U"}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end">
+                <DropdownMenuLabel>
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium">{user?.name}</p>
+                    <p className="text-xs text-muted-foreground">{user?.email}</p>
+                    <span className="inline-flex items-center rounded-full bg-medical-100 px-2 py-1 text-xs font-medium text-medical-800 mt-1">
+                      {user?.role.charAt(0).toUpperCase() + user?.role.slice(1)}
+                    </span>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => navigate("/settings")}
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="cursor-pointer text-red-500 focus:text-red-500"
+                  onClick={handleLogout}
+                  disabled={isLoading}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>{isLoading ? "Logging out..." : "Log out"}</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </header>
+
+        {/* Main content area */}
+        <div className="flex-1 p-6 overflow-auto">
           <Outlet />
         </div>
       </div>
