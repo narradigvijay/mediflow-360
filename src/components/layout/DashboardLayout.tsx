@@ -18,6 +18,7 @@ import {
   MapPin,
   Pill,
   Activity,
+  Upload,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -81,12 +82,6 @@ const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed
         link: "/emergency-access",
         roles: ["hospital"],
       });
-      items.push({
-        name: "Hospital Locator",
-        icon: <MapPin size={20} />,
-        link: "/hospital-locator",
-        roles: ["hospital"],
-      });
     }
 
     if (user?.role === "patient") {
@@ -103,6 +98,22 @@ const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed
         roles: ["patient"],
       });
     }
+
+    // Add hospital locator for both patients and hospitals
+    items.push({
+      name: "Hospital Locator",
+      icon: <MapPin size={20} />,
+      link: "/hospital-locator",
+      roles: ["patient", "hospital", "doctor"],
+    });
+
+    // Add document management for all roles
+    items.push({
+      name: "Documents",
+      icon: <Upload size={20} />,
+      link: "/documents",
+      roles: ["patient", "doctor", "hospital"],
+    });
 
     // Add emergency medication finder for all roles
     items.push({

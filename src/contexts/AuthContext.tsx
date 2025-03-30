@@ -8,6 +8,10 @@ type User = {
   email: string;
   role: "patient" | "doctor" | "hospital";
   profilePicture?: string;
+  specialization?: string; // For doctors
+  hospitalName?: string; // For hospital accounts
+  location?: string; // For hospitals and doctors
+  experience?: number; // For doctors (years)
 };
 
 type AuthContextType = {
@@ -17,6 +21,7 @@ type AuthContextType = {
   login: (email: string, password: string, role: "patient" | "doctor" | "hospital") => Promise<void>;
   logout: () => void;
   register: (name: string, email: string, password: string, role: "patient" | "doctor" | "hospital") => Promise<void>;
+  updateUserProfile: (updatedData: Partial<User>) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,6 +43,10 @@ const MOCK_USERS = [
     password: "password",
     role: "doctor" as const,
     profilePicture: "https://i.pravatar.cc/150?img=2",
+    specialization: "Cardiology",
+    hospitalName: "General Hospital",
+    location: "New York, NY",
+    experience: 12,
   },
   {
     id: "h1",
@@ -46,6 +55,7 @@ const MOCK_USERS = [
     password: "password",
     role: "hospital" as const,
     profilePicture: "https://i.pravatar.cc/150?img=3",
+    location: "Boston, MA",
   },
 ];
 
@@ -138,6 +148,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(false);
   };
 
+  const updateUserProfile = async (updatedData: Partial<User>) => {
+    if (!user) return;
+    
+    setIsLoading(true);
+    
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Update user data
+    const updatedUser = { ...user, ...updatedData };
+    setUser(updatedUser);
+    localStorage.setItem("mediflow_user", JSON.stringify(updatedUser));
+    
+    toast({
+      title: "Profile updated",
+      description: "Your profile has been updated successfully",
+    });
+    
+    setIsLoading(false);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -147,6 +178,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         login,
         logout,
         register,
+        updateUserProfile,
       }}
     >
       {children}

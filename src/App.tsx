@@ -15,6 +15,7 @@ import Appointments from "./pages/appointments/Appointments";
 import Unauthorized from "./pages/auth/Unauthorized";
 import MedicationAvailability from "./components/emergency/MedicationAvailability";
 import HealthRiskAnalysis from "./components/risk/HealthRiskAnalysis";
+import DocumentManager from "./components/documents/DocumentManager";
 
 // Create a client for React Query
 const queryClient = new QueryClient({
@@ -158,7 +159,14 @@ const App = () => (
                 </ProtectedRoute>
               } />
               
-              {/* New emergency medication route */}
+              {/* New document management route */}
+              <Route path="documents" element={
+                <ProtectedRoute>
+                  <DocumentManager />
+                </ProtectedRoute>
+              } />
+              
+              {/* Emergency medication route */}
               <Route path="medication-finder" element={
                 <ProtectedRoute>
                   <MedicationAvailability />
