@@ -100,5 +100,4 @@ The application will be available at http://localhost:5173.
 
 This project is licensed under the MIT License.
 
----
-For any questions or issues, feel free to contact us via GitHub issues or [email@example.com] (Replace with actual email).
+
