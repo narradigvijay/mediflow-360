@@ -1,56 +1,107 @@
-# Mediflow-360 hi
+# Mediflow-360
 
-## Project Overview
-Mediflow-360 is a health record management system designed to streamline patient, doctor, and hospital interactions. The system includes features such as patient record access, lab/test result tracking, emergency medical access, risk prediction, and a hospital locator.
+## Project Submission
 
-## Features
-- Secure patient and doctor authentication.
-- Health record management with lab/test result tracking.
-- Emergency medical record access.
-- Risk prediction based on patient symptoms.
-- Hospital locator for emergency medication availability.
-- Responsive design with file upload functionality.
-- Seamless connection between patients, doctors, and hospitals.
+*GitHub Repository*: [Mediflow-360](https://github.com/narradigvijay/mediflow-360)  
+*Demo Video*: [Link to YouTube/Google Drive](#) (Replace with actual link)
+
+## Problem Statement
+
+In the current healthcare landscape, managing medical records efficiently remains a challenge. Patients often struggle to maintain their medical history, and healthcare providers face difficulties in accessing patient data promptly. There is a need for a centralized, secure, and efficient health record management system that provides seamless access to medical history, lab reports, and emergency information.
+
+## Team Members
+
+- Digvijay Narra (GitHub: @narradigvijay)
+- [Add other team members here]
+
+## Solution Overview
+
+Mediflow-360 is a *health record management system* that enables patients, doctors, and hospitals to securely manage medical records, track lab/test results, and provide AI-powered health insights. It offers features such as:
+- *Patient and Doctor Access to Records*
+- *Lab/Test Result Tracking with Automated Precautions & Referrals*
+- *Symptom Tracking for Recurring Issues*
+- *Emergency Access to Patient Details*
+- *AI-Based Health Risk Prediction*
+- *Emergency Hospital Locator for Treatments*
+- *Doctor Appointment Scheduling*
+- *Emergency First-Aid Tutorials*
+
+## Tech Stack
+
+Mediflow-360 is built using:
+- *Frontend*: React.js, Vite, TypeScript, ShadCN
+- *Backend*: Node.js, Express.js
+- *Database*: MongoDB (Cloud-based via MongoDB Atlas)
+- *Authentication*: JWT (JSON Web Token)
+- *AI Model*: Integrated for health risk prediction
+- *APIs Used*: Google Maps API (for hospital locator), OpenAI API (for AI-based predictions)
 
 ## Installation & Setup
-Ensure you have **Node.js** and **npm** installed before proceeding.
 
-```sh
-# Step 1: Clone the repository
-git clone <YOUR_GIT_URL>
+Follow these steps to run the project locally:
 
-# Step 2: Navigate to the project directory
+### *1. Clone the Repository*
+sh
+git clone https://github.com/narradigvijay/mediflow-360.git
 cd mediflow-360
 
-# Step 3: Install dependencies
+
+### *2. Setup Backend*
+sh
+cd backend
 npm install
 
-# Step 4: Start the development server
-npm run dev
-```
 
-## Technologies Used
-- **Frontend:** Vite, React, TypeScript, ShadCN-UI, Tailwind CSS
-- **Backend:** Node.js, Express
-- **Database:** MongoDB
-- **Authentication:** JWT-based authentication
+#### *Configure Environment Variables*
+Create a .env file in the backend directory and add:
+env
+MONGO_URI=<Your MongoDB Atlas Connection String>
+JWT_SECRET=<Your Secret Key>
+PORT=5000
+
+
+Run the backend server:
+sh
+npm start
+
+
+### *3. Setup Frontend*
+sh
+cd ../frontend
+npm install
+npm run dev
+
+
+The application will be available at http://localhost:5173.
 
 ## Deployment
-To deploy the project, you can use platforms like **Netlify, Vercel, or Hostinger**.
-Follow the respective platform's documentation for deployment steps.
 
-## Documentation
-- A **requirements.txt** file will be included to specify necessary dependencies.
-- A **demo video** showcasing the project's features will be provided.
+- The backend is deployed on [Platform Name] (e.g., Render/Heroku)
+- The frontend is deployed on [Platform Name] (e.g., Vercel/Netlify)
+
+## Open-Source Libraries & APIs Used
+
+- Express.js
+- Mongoose (MongoDB ODM)
+- React.js
+- Vite
+- JWT Authentication
+- Google Maps API
+- OpenAI API
+
+## Future Improvements
+
+- Implement blockchain for secure medical record storage.
+- AI-powered chatbot for instant medical guidance.
+- IoT integration for real-time health monitoring.
 
 ## Contribution
-To contribute:
-1. Fork the repository.
-2. Create a new branch (`feature-branch-name`).
-3. Commit your changes and push them.
-4. Open a pull request.
+
+We welcome contributions! Feel free to open issues and submit pull requests.
 
 ## License
-This project is licensed under MIT License.
 
+This project is licensed under the MIT License.
 
+---
+For any questions or issues, feel free to contact us via GitHub issues or [email@example.com] (Replace with actual email).
