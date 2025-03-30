@@ -1,9 +1,11 @@
 # Mediflow-360
+NARRA DIGVIJAY(TEAM LEAD)
+M.V.S HARSHITH 
 
 ## Project Submission
 
 *GitHub Repository*: [Mediflow-360](https://github.com/narradigvijay/mediflow-360)  
-*Demo Video*: [Link to YouTube/Google Drive](#) (Replace with actual link)
+*Demo Video*: https://drive.google.com/file/d/1x3GwoO94RZBcRC8onishxRw85J27cyxC/view?usp=sharing
 
 ## Problem Statement
 
@@ -12,7 +14,7 @@ In the current healthcare landscape, managing medical records efficiently remain
 ## Team Members
 
 - Digvijay Narra (GitHub: @narradigvijay)
-- [Add other team members here]
+
 
 ## Solution Overview
 
@@ -74,10 +76,7 @@ npm run dev
 
 The application will be available at http://localhost:5173.
 
-## Deployment
 
-- The backend is deployed on [Platform Name] (e.g., Render/Heroku)
-- The frontend is deployed on [Platform Name] (e.g., Vercel/Netlify)
 
 ## Open-Source Libraries & APIs Used
 
@@ -95,9 +94,7 @@ The application will be available at http://localhost:5173.
 - AI-powered chatbot for instant medical guidance.
 - IoT integration for real-time health monitoring.
 
-## Contribution
 
-We welcome contributions! Feel free to open issues and submit pull requests.
 
 ## License
 
