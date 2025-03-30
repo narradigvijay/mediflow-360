@@ -8,12 +8,14 @@ type ProtectedRouteProps = {
   children: React.ReactNode;
   requiredRoles?: Array<"patient" | "doctor" | "hospital">;
   allowEmergencyAccess?: boolean;
+  emergencyReason?: string;
 };
 
 const ProtectedRoute = ({ 
   children, 
   requiredRoles,
-  allowEmergencyAccess = false
+  allowEmergencyAccess = false,
+  emergencyReason
 }: ProtectedRouteProps) => {
   const { isAuthenticated, user, isLoading } = useAuth();
   const location = useLocation();
@@ -44,7 +46,7 @@ const ProtectedRoute = ({
       // Allow emergency access but show a toast notification
       toast({
         title: "Emergency Access Mode",
-        description: "You are accessing this resource under emergency privileges. All actions will be logged.",
+        description: emergencyReason || "You are accessing this resource under emergency privileges. All actions will be logged.",
         variant: "destructive",
         duration: 5000,
       });

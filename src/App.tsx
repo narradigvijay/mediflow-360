@@ -13,6 +13,8 @@ import Dashboard from "./pages/dashboard/Index";
 import HealthRecords from "./pages/health/HealthRecords";
 import Appointments from "./pages/appointments/Appointments";
 import Unauthorized from "./pages/auth/Unauthorized";
+import MedicationAvailability from "./components/emergency/MedicationAvailability";
+import HealthRiskAnalysis from "./components/risk/HealthRiskAnalysis";
 
 // Create a client for React Query
 const queryClient = new QueryClient({
@@ -48,7 +50,7 @@ const App = () => (
               <Route path="settings" element={<div className="text-center py-10">Settings page content will go here</div>} />
               <Route path="notifications" element={<div className="text-center py-10">Notifications page content will go here</div>} />
               
-              {/* Emergency routes */}
+              {/* Emergency related routes */}
               <Route path="emergency-access" element={
                 <ProtectedRoute requiredRoles={["doctor", "hospital"]}>
                   <div className="space-y-6">
@@ -153,6 +155,20 @@ const App = () => (
                       </div>
                     </div>
                   </div>
+                </ProtectedRoute>
+              } />
+              
+              {/* New emergency medication route */}
+              <Route path="medication-finder" element={
+                <ProtectedRoute>
+                  <MedicationAvailability />
+                </ProtectedRoute>
+              } />
+              
+              {/* Health risk analysis route */}
+              <Route path="health-risk" element={
+                <ProtectedRoute>
+                  <HealthRiskAnalysis />
                 </ProtectedRoute>
               } />
               

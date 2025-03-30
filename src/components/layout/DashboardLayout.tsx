@@ -16,6 +16,8 @@ import {
   X,
   Phone,
   MapPin,
+  Pill,
+  Activity,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -94,7 +96,21 @@ const Sidebar = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed
         link: "/emergency-contacts",
         roles: ["patient"],
       });
+      items.push({
+        name: "Health Risk Analysis",
+        icon: <Activity size={20} />,
+        link: "/health-risk",
+        roles: ["patient"],
+      });
     }
+
+    // Add emergency medication finder for all roles
+    items.push({
+      name: "Medication Finder",
+      icon: <Pill size={20} />,
+      link: "/medication-finder",
+      roles: ["patient", "doctor", "hospital"],
+    });
 
     // Add common items at the end
     items.push(
