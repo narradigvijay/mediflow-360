@@ -1,69 +1,56 @@
-# Welcome to your ourproject
+# Mediflow-360
 
-## Project info
+## Project Overview
+Mediflow-360 is a health record management system designed to streamline patient, doctor, and hospital interactions. The system includes features such as patient record access, lab/test result tracking, emergency medical access, risk prediction, and a hospital locator.
 
-**URL**: https://lovable.dev/projects/4382807e-9bdc-490f-880c-5464e79f1c68
+## Features
+- Secure patient and doctor authentication.
+- Health record management with lab/test result tracking.
+- Emergency medical record access.
+- Risk prediction based on patient symptoms.
+- Hospital locator for emergency medication availability.
+- Responsive design with file upload functionality.
+- Seamless connection between patients, doctors, and hospitals.
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/4382807e-9bdc-490f-880c-5464e79f1c68) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Installation & Setup
+Ensure you have **Node.js** and **npm** installed before proceeding.
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Step 1: Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Step 2: Navigate to the project directory
+cd mediflow-360
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Step 3: Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Technologies Used
+- **Frontend:** Vite, React, TypeScript, ShadCN-UI, Tailwind CSS
+- **Backend:** Node.js, Express
+- **Database:** MongoDB
+- **Authentication:** JWT-based authentication
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Deployment
+To deploy the project, you can use platforms like **Netlify, Vercel, or Hostinger**.
+Follow the respective platform's documentation for deployment steps.
 
-**Use GitHub Codespaces**
+## Documentation
+- A **requirements.txt** file will be included to specify necessary dependencies.
+- A **demo video** showcasing the project's features will be provided.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Contribution
+To contribute:
+1. Fork the repository.
+2. Create a new branch (`feature-branch-name`).
+3. Commit your changes and push them.
+4. Open a pull request.
 
-## What technologies are used for this project?
+## License
+This project is licensed under MIT License.
 
-This project is built with .
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/4382807e-9bdc-490f-880c-5464e79f1c68) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
