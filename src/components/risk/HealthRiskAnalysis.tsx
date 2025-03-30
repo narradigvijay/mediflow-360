@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Activity, Heart, Lungs, AlertTriangle, FileText, ArrowUpRight, BarChart3 } from "lucide-react";
+import { Activity, Heart, AlertTriangle, FileText, ArrowUpRight, BarChart3, Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -250,7 +249,7 @@ const HealthRiskAnalysis = () => {
                   
                   <div className="p-4 border rounded-lg">
                     <div className="flex items-start">
-                      <Lungs className="h-5 w-5 text-blue-500 mt-0.5 mr-2" />
+                      <Stethoscope className="h-5 w-5 text-blue-500 mt-0.5 mr-2" />
                       <div>
                         <h4 className="font-medium">Lifestyle Modifications</h4>
                         <p className="text-sm text-gray-600 mt-1">
